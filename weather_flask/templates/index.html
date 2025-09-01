@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Weather App</h1>
+
+    <form method="POST">
+        <input type="text" name="city" placeholder="Enter city name">
+        <button type="submit">Check City</button>
+    </form>
+
+    {% if single_city %}
+        <h2>Weather for {{ single_city.city }}</h2>
+        <p>Condition: {{ single_city.condition }}</p>
+        <p>Temperature: {{ single_city.temp }}°C</p>
+        <p>Humidity: {{ single_city.humidity }}%</p>
+        <p>Description: {{ single_city.description }}</p>
+    {% endif %}
+
+    <h2>5 Selected Cities</h2>
+    {% for city in results %}
+        <p>{{ city.city }}: {{ city.condition }}, {{ city.temp }}°C, Humidity {{ city.humidity }}% ({{ city.description }})</p>
+    {% endfor %}
+
+    {% if coldest %}
+        <p>Coldest city: {{ coldest.city }} ({{ coldest.temp }}°C)</p>
+        <p>Average temperature: {{ avg_temp|round(2) }}°C</p>
+    {% endif %}
+</body>
+</html>
